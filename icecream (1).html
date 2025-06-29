@@ -1,0 +1,225 @@
+<html>
+<head>
+<meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+<script>
+function greetUser() {
+var name = document.getElementById("nameInput").value;
+var location = document.getElementById("locationInput").value;
+if(name=== "") {
+   alert("Please enter your name first.");
+} else if (location === "") {
+    alert("Please enter your location.");
+} else {
+   placeorder();
+   alert("Hi  "  +   name  +     " " + location  +   ", your ice cream is on the way!");
+   
+}
+}
+function greet() {
+alert("Thanks for ordering!");
+}
+function greetCustomer() {
+alert("Welcome to the Ice cream world");
+}
+window.onload = function() {
+alert("Welcome to my Ice cream shop");
+}
+let cartCount = 0;
+let cartItems = [];
+let totalPrice = 0;
+function addToCart(flavor, price) {
+cartCount++;
+cartItems.push({flavor: flavor, price:price});
+totalPrice+= price;
+document.getElementById("cartCount").innerText = cartCount;
+alert(`${flavor} added to cart! price: ₹${price}`);
+}
+function placeorder() {
+if (cartItems.length === 0) {
+alert("Your cart is empty");
+} else {
+let orderSummary = "you have ordered:\n" ; cartItems.forEach(item => { 
+orderSummary += `- ${item.flavor}: ₹${item.price}\n` ;
+});
+orderSummary +=`\nTotal: ₹${totalPrice}`;
+alert(orderSummary);
+}
+}
+function getLocation() {
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+} else {
+  alert("Geolocation is not supported by the brower.");
+}
+}
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+.then(response => response.json())
+.then(data => {
+   const address = `${data.address.city || data.address.town || data.address.village || "UNKNOWN"}, ${data.address.state || ""}`;
+document.getElementById("locationInput").value = address;
+})
+.catch(error => {
+alert("could not retrieve location. Please try again.");
+console.error(error);
+});
+}
+function showError(error) {
+switch (error.code) {
+case error.PERMISSION_DENIED:
+alert("user denied the request for geolocation.");
+break;
+case error.POSITION_UNAVAILABLE:
+alert("location information is unavailable.");
+break;
+case error.TIMEOUT:
+alert("The request to get user location timed out.");
+break;
+case error.UNKNOWN_ERROR:
+alert("An unknown error occured.");
+break;
+}
+}
+
+</script>
+</head>
+
+<body background="back.jpeg">
+<div style="text-align:center;">
+</div>
+
+<div class="sidebar" style="width:100%;background-color:black;height:50px;margin-top:20px;line-height:50px;margin-top:auto;">
+  <div style="text-align:center;margin-bottom:40px;">
+
+<a style="color:white;margin:50px;" href="icecream (1).html" target="_blank">Home </a>
+<a style="color:white;margin:60px;" href="about.html" target="_blank">About </a>
+<a style="color:white;margin:50px;" href="service.html"target="_blank">Services </a>
+<a style="color:white;margin:70px;" href="contact.html"target="_blank">Contact </a>
+
+
+</div>
+</div>
+<center>
+<h1 style="text-decoration:underline" window.onload="greetCustomer()"><i>Welcome to our Ice cream world..</i></h1>
+</center>
+
+<div style="display:flex;">
+
+  <h1 style="font-size:40px;">The Sweet Scoop</h1>
+</div>
+
+<p>Life's better with a scoop!
+</p>
+ <img src="hello.jpeg.jpeg" alt="campany logo"style=" margin-left:1050px; margin-top:-161px;margin-right:110px; border-radius:50%;" />
+</div>
+<h1 style="text-align:center;">A new adventure in ice cream</h1>
+
+<p style="text-align:center;margin-bottom:50px;" >
+ we believe that simple nature food tasty best.<br> our ice cream lovingly handmade in small batches in the <br> heart using only simple.natural and fresh local ingredients of adventure and discovery.  
+</p>
+
+<div style="text-align:center;margin-bottom:50px;">
+<a style="padding:15px 15px 10px 15px;" href="#"><button type="button">Read More </button></a>
+</div>
+
+<hr width="500">
+
+      <h1 style="text-align:center;">Our Core Flavours</h1>
+
+<div style="text-align:right; font-weight:bold;" class="cart">
+Cart Items: <span id="cartCount">0</span>
+</div>
+       <div style="display:flex;margin-top:50px;">
+
+<img src="choco.jpeg" alt="choco ice-cream" style="height:100px;width:25%; border:5px solid black;"/>
+<p style="padding-left:20px;">
+Chocolate provides natural chemicals that can help protect from cardiovascular disease and stroke and the calcim in icecream can work to build strong bones.Chocolate
+ice cream can help reduce stress. The casein (a protein) in chocolate ice cream can trigger the release of endorphins, which can help reduce stress and promote a sense of well-being. Chocolate also contains phenylethylamine, a chemical that can help you feel happy or “in love
+The cocoa added to create chocolate ice cream is rich in a chemical called flavanol, which can help protect the heart.
+</p>
+
+</div>
+<h2>CHOCOLATE : ₹100</h2>
+<button onclick="alert('You selected chocolate flavour!')">click me</button>
+<button onclick="addToCart('chocolate', 100)">Add to cart</button>
+
+
+
+      <div style="display:flex;">
+
+
+<p>
+Vanilla ice cream, as a dairy product, offers several nutritional benefits. It's a source of calcium, phosphorus, and other essential minerals, contributing to bone health and overall well-being. It also contains vitamins like A, C, D, and E, along with B vitamins, further enriching its nutritional profile. 
+</p>
+
+<img src="vanilla.jpeg" alt="Vanilla ice-cream" style="height:100px;border:5px solid black;"/><br>
+<h2 style="margin:5px 0 0;">Vanilla : ₹80</h2>
+<!--<div style="display:flex; flex-direction: column; align-item:center; margin-right:20px;>
+<h2 style="margin:10px 0;">Vanilla : ₹80</h2>
+</div>-->
+</div>
+
+<button style="float:right;" onclick="alert('You selected Vanilla flavour!')">click me</button>
+<button style="float:right;" onclick="addToCart('Vanilla',80)">Add to cart</button>
+
+
+       <div style="display:flex;">
+
+
+<img src="straw.jpeg" style="height:100px;  border:5px solid black;"/>
+<p>
+Strategic ice cream, in this context, likely refers to ice cream that is formulated with a specific purpose or health benefit in mind, beyond just being a treat. This could involve reducing sugar or fat content, adding healthy ingredients like probiotics or antioxidants, or developing vegan options. 
+</p>
+</div>
+</div>
+<h2>STRAWBERRY : ₹120</h2>
+<button  onclick="alert('You selected strawberry flavour!')">click me</button>
+<button   onclick="addToCart('Strawberry',120)">Add to cart</button>
+
+
+   <div style="display:flex;">
+
+<p>
+We’ve taken the king of fruits and created an ice cream flavour that rules! Our mango ice cream is made from hand-picked Alphonso mangoes sourced from Ratnagiri. This flavour is every mango lover’s fantasy come true.
+</p>
+<img src="mango.jpeg" alt="mango ice-cream" style="height:100px;  border:5px solid black;"/>
+</div>
+<button style="float:right; onclick="alert('You selected mango flavour!')">click me</button>
+<button style="float:right;onclick="addToCart('mango',95)">Add to cart</button>
+ 
+
+<div style="display:flex;">
+
+
+<img src="butter.jpeg" style="height:100px; border:5px solid black;"/>
+<p>
+Scoops Butterscotch ice cream is a decadent creamy ice cream. It's an indulgent treat that will be enough for all your friends/ family. It has an irresistible rich butterscotch flavour making a delicious dessert. This ice cream is made with the finest butter so that it is rich and creamy. You can enjoy this ice cream with dry fruits or any other toppings. It is a great treat for your whole family. Enjoy the creamy texture of this ice cream with your friends and family.
+</p>
+</div>
+</div>
+<h2>BUTTERSCOTCH : ₹115</h2>
+<button  onclick="alert('You selected Butterscotch flavour!')">click me</button>
+<button  onclick="addToCart('Butterscotch',115)">Add to cart</button>
+
+
+                                        <center>
+<h2 style="margin-top:38px;"> ORDER YOUR ICE CREAM</h2>
+<input type="text" id="nameInput" placeholder="Enter your name">
+<input type="text" id="locationInput" placeholder="location will appear here">
+<button style="width:90%; max-width:300px;" onclick="getLocation()">get my location</button><br>
+<br><button style="width:90%; max-width:300px;" onclick="greetUser()">order now</button>
+<button style="width:90%; max-width:300px;" onclick="greet()">Feedback</button>
+                                       </center>
+<footer style="background-color:black;
+color:white;
+text-align:center;
+padding:15px;
+margin-top:30px;">
+&copy; 2025 The Sweet Scoop Ice Cream Co.   &#124  Made with love and  sprinkles!
+</footer>
+
+</body>
+
+</html>
